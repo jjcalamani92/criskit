@@ -15,7 +15,7 @@
 <script>
   import { page } from '$app/stores';
   // console.log('page', $page)
-  const pages = $page.data.pages
+  const pages = $page.data.categories
   // console.log('page', $page.data.pages)
 </script>
 <div class="bg-white">
