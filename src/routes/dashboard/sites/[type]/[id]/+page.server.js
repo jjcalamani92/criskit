@@ -96,7 +96,7 @@ export async function load({ params }) {
 // }
 
 export const actions = {
-	create: async ({ request, params, fetch }) => {
+	create: async ({ request, params }) => {
 		const form = await superValidate(request, newPage);
 		if (!form.valid) return fail(400, { form });
 
@@ -108,7 +108,7 @@ export const actions = {
 			uid: '123456789'
 		};
 
-		const res = await fetch(`/api/graphql`, {
+		const res = await fetch(`${env.API_URL}/api/graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
