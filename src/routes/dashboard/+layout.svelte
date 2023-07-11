@@ -3,6 +3,7 @@
 	import PageHeadings from '$lib/components/PageHeadings.svelte';
 	import StackedLayouts from '$lib/components/StackedLayouts.svelte';
 	import FormPage from '$lib/components/forms/FormPage.svelte';
+	import ProgressBar from '$lib/components/ui/ProgressBar.svelte';
 
 	export let data;
 </script>
@@ -11,6 +12,7 @@
 	<title>Dashboard</title>
 	<meta name="description" content="Dashboard Page Description" />
 </svelte:head>
+
 <StackedLayouts />
 
 <!-- <PageHeadings /> -->

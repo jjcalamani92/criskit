@@ -7,7 +7,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const newPage = z.object({
-	name: z.string().min(1).default('Name Page'),
+	name: z.string().min(1).default('Name'),
 	description: z.string().min(1).default('Description Page'),
 	thumbnailUrl: z
 		.string()
@@ -63,6 +63,11 @@ export async function load({ params }) {
       query GetSite($type: String!, $id: String!) {
 				getSite(type: $type, id: $id) {
 					_id
+					data{
+						info{
+							name
+						}
+					}
 					
 				}
 			}

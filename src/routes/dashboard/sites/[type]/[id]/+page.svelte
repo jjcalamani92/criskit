@@ -4,10 +4,10 @@
 	import PageHeadings from '$lib/components/PageHeadings.svelte';
 	import FormPage from '$lib/components/forms/FormPage.svelte';
   export let data;
-		
+	// console.log('data', data)
 </script>
 <FormsSlideOvers title={'New Page'} >
 	<FormPage {data} />
 </FormsSlideOvers>
-<PageHeadings />
-<ListPages />
+<PageHeadings title={data.site.data.info.name} />
+<ListPages  pages={data.pages}/>

@@ -48,7 +48,7 @@ export async function load({ params }) {
 			variables: {
 				type: params.type,
 				parentId: params.uid,
-				i:'0'
+				i: params.i
 			}
 		})
 	});
@@ -57,50 +57,103 @@ export async function load({ params }) {
 		data: { getCategoriesByParentId: categories }
 	} = await response.json();
 
-	const response0 = await fetch(`${env.API_URL}/api/graphql`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			query: `
-      query GetPage($type: String!, $id: String!) {
-				getPage(type: $type, id: $id) {
-					_id
-					data{
-						name
-						params{
-							path
-							paths{
-								name
+	let response0
+	let page
+	// const response2 = await fetch(`${env.API_URL}/api/graphql`, {
+	// 	method: 'POST',
+	// 	headers: { 'Content-Type': 'application/json' },
+	// 	body: JSON.stringify({
+	// 		query: `
+  //     query GetPage($type: String!, $id: String!) {
+	// 			getPage(type: $type, id: $id) {
+	// 				_id
+	// 				data{
+	// 					name
+	// 					params{
+	// 						path
+	// 						paths{
+	// 							name
+	// 						}
+	// 					}
+	// 				}
+					
+	// 			}
+	// 		}
+  //     `,
+	// 		variables: {
+	// 			type: params.type,
+	// 			id: "64ad978e5f570ada0dbfaa85"
+	// 		}
+	// 	})
+	// });
+
+	if (params.i === '0') {
+		
+		 response0 = await fetch(`${env.API_URL}/api/graphql`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				query: `
+				query GetPage($type: String!, $id: String!) {
+					getPage(type: $type, id: $id) {
+						_id
+						data{
+							name
+							params{
+								path
+								paths{
+									name
+								}
 							}
 						}
+						
 					}
-					
 				}
-			}
-      `,
-			variables: {
-				type: params.type,
-				id: params.uid
-			}
-		})
-	});
-
-	const {
-		data: { getPage: page }
-	} = await response0.json();
+				`,
+				variables: {
+					type: params.type,
+					id: params.uid
+				}
+			})
+		}).then(data => data.json());
+		page = response0.data.getPage
+	} else {
+		response0 = await fetch(`${env.API_URL}/api/graphql`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				query: `
+				query GetCategory($type: String!, $id: String!, $i: String!) {
+					getCategory(type: $type, id: $id, i: $i) {
+						_id
+						data{
+							name
+							params{
+								path
+								paths{
+									name
+								}
+							}
+						}
+						
+					}
+				}
+				`,
+				variables: {
+					type: params.type,
+					id: params.uid,
+					i: `${+params.i-1}`
+				}
+			})
+		}).then((data) => data.json());
+		page = response0.data.getCategory
+	}
 
 	let form = await superValidate(newCategory);
 	
 	return { page, categories, form };
 }
 
-// export const actions = {
-// 	default: async(event) => {
-// 		const formData = Object.fromEntries(await event.request.formData())
-// 		console.log('formDataa', formData)
-
-// 	}
-// }
 
 export const actions = {
 	create: async ({ request, params }) => {
@@ -113,7 +166,7 @@ export const actions = {
 			siteId: params.id,
 			type: params.type,
 			uid: '123456789',
-			i: '0',
+			i: params.i,
 		};
 		
 		const res = await fetch(`${env.API_URL}/api/graphql`, {
