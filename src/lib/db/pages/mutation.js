@@ -49,7 +49,7 @@ export async function addPage(body) {
  * @param {{ name: string; uid: string; id?: string; parentId?: string; description?: string; siteId?: string; typePage: string; type?: string; thumbnailUrl?: string; }} body
  */
 export async function updatePage(body) {
-	const {id, name, parentId, description, siteId, uid, typePage, type, thumbnailUrl } = body;
+	const {id, name, description, uid, typePage, type, thumbnailUrl } = body;
 	
   let ids0;
   let ids1;
@@ -109,7 +109,7 @@ export async function updatePage(body) {
       },
       $push: {
         "data.updateDate.register": {
-          uid: body.uid,
+          uid: uid,
           change: "updated page info",
           updatedAt: new Date(),
         },

@@ -7,6 +7,10 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>Dashboard</title>
+	<meta name="description" content="Dashboard Page Description" />
+</svelte:head>
 <StackedLayouts />
 
 <!-- <PageHeadings /> -->
