@@ -6,9 +6,9 @@ import { z } from 'zod';
 
 
 const newSite = z.object({
-	name: z.string().min(1).default('Name Site'),
+	name: z.string().min(1).default('Name'),
 	theme: z.string().min(1).default('red'),
-	url: z.string().min(1).default('red.vercel.app'),
+	url: z.string().min(1).default('.vercel.app'),
 	lightAndDarkMode: z.boolean().default(false),
 });
 

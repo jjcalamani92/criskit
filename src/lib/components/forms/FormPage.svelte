@@ -7,12 +7,9 @@
   export let data;
 
   const { form } = superForm(data.form)
-  // $form.parentId = $page.data.site._id
-  // $form.siteId =  $page.data.site._id
-  // $form.uid =  "123456789"
-  // $form.type =  $page.params.type
+  
 </script>
-<SuperDebug data={$form} />
+<!-- <SuperDebug data={$form} /> -->
 <form method="POST" action="?/create">
   <div class="space-y-6">
     <div class="border-b border-gray-900/10 pb-12">
