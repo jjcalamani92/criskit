@@ -3,8 +3,6 @@
   import { page } from '$app/stores';
 	import { superForm } from 'sveltekit-superforms/client';
 	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
-	// import { SuperForm } from 'sveltekit-superforms/client';
-  // console.log('data', $page)
 
   export let data;
 

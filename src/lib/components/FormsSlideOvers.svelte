@@ -1,7 +1,10 @@
 <script>
 	import { form } from "../stores";
 	import clickOutside from "../utils/clickOutside";
-
+  /**
+	 * @type {string}
+	 */
+  export let title;
 	
 </script>
 {#if $form}
@@ -36,7 +39,7 @@
             <div class="flex h-full flex-col   bg-white shadow-xl">
               <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                 <div class="flex items-start justify-between">
-                  <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">New Pages</h2>
+                  <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">{title}</h2>
                   <div class="ml-3 flex h-7 items-center">
                     <button on:click={form.close} type="button" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                       <span class="sr-only">Close panel</span>

@@ -3,12 +3,13 @@
 	import ListSites from '$lib/components/ListSites.svelte';
 	import PageHeadings from '$lib/components/PageHeadings.svelte';
 	import FormPage from '$lib/components/forms/FormPage.svelte';
+	import FormSite from '$lib/components/forms/FormSite.svelte';
    
     export let data;
-		console.log('data', data)
+		// console.log('data', data)
 </script>
-<FormsSlideOvers >
-	<FormPage />
+<FormsSlideOvers title={'New Site'} >
+	<FormSite {data} />
 </FormsSlideOvers>
 <PageHeadings />
 <ListSites sites={data.sites}/>

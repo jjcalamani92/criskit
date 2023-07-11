@@ -15,11 +15,7 @@ const newPage = z.object({
 		.default(
 			'https://res.cloudinary.com/dcpr6059h/image/upload/v1689077267/icon-image-not-found-free-vector_aro2ip.jpg'
 		),
-	// type: z.string(),
 	typePage: z.string().default('category')
-	// parentId: z.string(),
-	// siteId: z.string(),
-	// uid: z.string(),
 });
 
 export const config = {
@@ -83,7 +79,7 @@ export async function load({ params }) {
 	} = await response0.json();
 
 	let form = await superValidate(newPage);
-	form.data.siteId = site._id;
+	
 	return { site, pages, form };
 }
 

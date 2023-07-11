@@ -6,7 +6,7 @@
   export let data;
 		
 </script>
-<FormsSlideOvers >
+<FormsSlideOvers title={'New Page'} >
 	<FormPage {data} />
 </FormsSlideOvers>
 <PageHeadings />
