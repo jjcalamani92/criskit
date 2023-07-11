@@ -7,7 +7,7 @@
 		
 </script>
 <FormsSlideOvers >
-	<FormPage />
+	<FormPage {data} />
 </FormsSlideOvers>
 <PageHeadings />
 <ListPages />

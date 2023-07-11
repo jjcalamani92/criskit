@@ -1,9 +1,21 @@
 <script >
   import { enhance } from '$app/forms';
-  
+  import { page } from '$app/stores';
+	import { superForm } from 'sveltekit-superforms/client';
+	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
+	// import { SuperForm } from 'sveltekit-superforms/client';
+  // console.log('data', $page)
 
+  export let data;
+
+  const { form } = superForm(data.form)
+  // $form.parentId = $page.data.site._id
+  // $form.siteId =  $page.data.site._id
+  // $form.uid =  "123456789"
+  // $form.type =  $page.params.type
 </script>
-<form method="POST" action="?/create" use:enhance>
+<SuperDebug data={$form} />
+<form method="POST" action="?/create">
   <div class="space-y-6">
     <div class="border-b border-gray-900/10 pb-12">
       <!-- <h2 class="text-base font-semibold leading-7 text-gray-900">Profile</h2> -->
@@ -14,13 +26,13 @@
         <div class="col-span-full">
           <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
           <div class="mt-2">
-            <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="Ropa">
+            <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" bind:value={$form.name}>
           </div>
         </div>
         <div class="col-span-full">
           <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
           <div class="mt-2">
-            <textarea id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="Description"></textarea>
+            <textarea id="description" name="description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" bind:value={$form.description}></textarea>
           </div>
           <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
         </div>
@@ -30,7 +42,7 @@
         <div class="col-span-full">
           <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Thumbnail Url</label>
           <div class="mt-2">
-            <input type="text" name="thumbnailUrl" id="thumbnailUrl"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="https://images.asos-media.com/groups/conjunto-negro-con-diseno-de-lazos-flocados-de-malla-tallulah-de-asos-design/130399-group-1?$n_640w$&wid=513&fit=constrain">
+            <input type="text" name="thumbnailUrl" id="thumbnailUrl"  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" bind:value={$form.thumbnailUrl}>
           </div>
           <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             <div class="text-center">
@@ -57,7 +69,7 @@
         <p class="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
         <div class="mt-6 space-y-6">
           <div class="flex items-center gap-x-3">
-            <input id="category" name="type" type="radio" checked class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" value="category">
+            <input id="category" name="type" type="radio" bind:value={$form.typePage} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
             <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Categories</label>
           </div>
           <div class="flex items-center gap-x-3">
