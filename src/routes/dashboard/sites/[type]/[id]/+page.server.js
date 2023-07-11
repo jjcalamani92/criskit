@@ -2,6 +2,12 @@
 
 import { env } from '$env/dynamic/private';
 
+export const config = {
+	isr: {
+			expiration: 60,
+	}
+};
+
 /** @type {import('./$types').PageServerLoad} */
 export async function load({params}) {
 	const response = await fetch(`${env.API_URL}/api/graphql`, {
