@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-vercel": "^3.0.1",
 		"graphql": "^16.7.1",
 		"graphql-yoga": "^4.0.3",
 		"mongodb": "^5.7.0"
