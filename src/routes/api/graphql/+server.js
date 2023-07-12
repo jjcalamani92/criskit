@@ -7,7 +7,7 @@ import { addPage, deletePageById, deletePagesById, updatePage, } from '$lib/db/p
 import { existsPage, getPage, getPages, getPagesByParentId, getPagesBySiteId } from '$lib/db/pages/query';
 import { existsSite, getSite, getSites } from '$lib/db/sites/get';
 import { addSite } from '$lib/db/sites/add';
-import { getCategories, getCategoriesByParentId, getCategoriesBySiteId, getCategory } from '$lib/db/categories/query';
+import { getCategories, getCategoriesByParentId, getCategoriesBySiteId, getCategory, getCategoryInAll } from '$lib/db/categories/query';
 import { addCategory, deleteCategoriesById, updateCategory } from '$lib/db/categories/mutation';
 import { existsProduct, getProduct, getProducts, getProductsByParentId, getProductsBySiteId } from '$lib/db/products/query';
 import { addProduct, deleteProductById, deleteProductsById, updateProduct } from '$lib/db/products/mutation';
@@ -191,6 +191,7 @@ const yogaApp = createYoga({
 				getCategoriesBySiteId(type: String!, siteId: String!, i: String!): [Category]
 				getCategories(type: String!, i: String!): [Category]
 				getCategory(type: String!, id: String!, i: String!): Category
+				getCategoryInAll(type: String!, id: String!): Category
 			}
 			type Mutation {
 				updateSite(type: String!, id: String!, input: SiteInput!): String
@@ -231,6 +232,7 @@ const yogaApp = createYoga({
 				getCategoriesByParentId: async (_, { type, parentId, i }) => await getCategoriesByParentId(type, parentId, i),
 				getCategoriesBySiteId: async (_, { type, siteId, i }) => await getCategoriesBySiteId(type, siteId, i),
 				getCategory: async (_, { type, id,i }) => await getCategory(type, id, i),
+				getCategoryInAll: async (_, { type, id, }) => await getCategoryInAll(type, id,),
 			},
 			Mutation: {
 				addSite: async (parent, { input }, ) => {

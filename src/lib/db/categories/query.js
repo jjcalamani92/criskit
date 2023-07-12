@@ -59,6 +59,47 @@ export async function getCategory(typeSite, id, i) {
 	});
 	return category;
 }
+/**
+ * @param {any} typeSite
+ * @param {any} id
+ * @param {any} i
+ */
+export async function getCategoryInAll(typeSite, id,) {
+	const client = await clientPromise0;
+	const db = client.db(typeSite);
+	const collections = ['pages','categories0', 'categories1', 'categories2', 'categories3', 'categories4', 'categories5', 'categories6', 'categories7', 'categories8', 'categories9', 'categories10'];
+	let category = null;
+	for (const collectionName of collections) {
+    category = await db.collection(collectionName).findOne(
+      {
+        $expr: {
+          $eq: [
+            "$_id",
+            {
+              $toObjectId: id,
+            },
+          ],
+        },
+      },
+      {
+        projection: {
+          _id: 1,
+          "data.name": 1,
+          "data.description": 1,
+          "data.thumbnailUrl": 1,
+          "data.type": 1,
+          "data.params": 1,
+        },
+      }
+    );
+
+    if (category) {
+      break; // Si se encuentra la categoría, se interrumpe el bucle
+    }
+  }
+	
+	return category;
+}
 
 /**
  * @param {any} typeSite
