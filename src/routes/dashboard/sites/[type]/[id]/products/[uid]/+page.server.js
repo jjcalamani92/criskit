@@ -1,22 +1,13 @@
 // @ts-nocheck
 
-import { env } from '$env/dynamic/private';
+import { getCategoryInAll } from '$lib/fetch/categories';
+import { addProduct, getProductsByParentId } from '$lib/fetch/products';
+import { schemaProduct } from '$lib/zod/products';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 
-import { z } from 'zod';
 
-const newProduct = z.object({
-	name: z.string().min(1).default('Name'),
-	description: z.string().min(1).default('Description Product'),
-	thumbnailUrl: z
-		.string()
-		.min(1)
-		.default(
-			'https://res.cloudinary.com/dcpr6059h/image/upload/v1689077267/icon-image-not-found-free-vector_aro2ip.jpg'
-		),
-	paths: z.string()
-});
+
 
 export const config = {
 	isr: {
@@ -26,69 +17,10 @@ export const config = {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-	const response = await fetch(`${env.API_URL}/api/graphql`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			query: `
-      query GetProductsByParentId($type: String!, $parentId: String!) {
-				getProductsByParentId(type: $type, parentId: $parentId ) {
-					_id
-					parentId
-					slug
-					data{
-						name
-						description
-						thumbnailUrl
-					}
-					
-				}
-			}
-      `,
-			variables: {
-				type: params.type,
-				parentId: params.uid,
-			}
-		})
-	});
+	const products = await getProductsByParentId(params)
 
-	const {
-		data: { getProductsByParentId: products }
-	} = await response.json();
-
-	const response0 = await fetch(`${env.API_URL}/api/graphql`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			query: `
-      query GetCategoryInAll($type: String!, $id: String!) {
-				getCategoryInAll(type: $type, id: $id) {
-					_id
-					data{
-						name
-						params{
-							path
-							paths{
-								name
-							}
-						}
-					}
-					
-				}
-			}
-      `,
-			variables: {
-				type: params.type,
-				id: params.uid
-			}
-		})
-	});
-
-	const {
-		data: { getCategoryInAll: category }
-	} = await response0.json();
-
-	let form = await superValidate(newProduct);
+	const category = await getCategoryInAll(params)
+	let form = await superValidate(schemaProduct);
 	
 	return { category, products, form };
 }
@@ -103,7 +35,7 @@ export async function load({ params }) {
 
 export const actions = {
 	create: async ({ request, params }) => {
-		const form = await superValidate(request, newProduct);
+		const form = await superValidate(request, schemaProduct);
 		if (!form.valid) return fail(400, { form });
 
 		const input = {
@@ -116,22 +48,8 @@ export const actions = {
 			
 		};
 		
-		const res = await fetch(`${env.API_URL}/api/graphql`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				query: `
-					mutation AddProduct($input:ProductInput!) {
-						addProduct(input:$input) 
-					}
-				`,
-				variables: {
-					input: input
-				}
-			})
-		});
-		const item = await res.json();
-		return { item };
+		return await addProduct(input)
+		
 		// db.createTodo(cookies.get('userid'), data.get('description'));
 	}
 

@@ -4,13 +4,16 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
 
-  export let data;
-  // console.log('data', data)
+
+   export let data;
+  //  console.log('dataaa', data)
+  // console.log(data?.data.params.paths)
   // @ts-ignore
-  const { form } = superForm(data.formPage, {
-  id: 'custom-id'
-})
-  // console.log('$form', $form)
+  const { form } = superForm(data.formEditCategory, {
+    id: "12345s"
+  })
+  // console.log('data.page', data.page)
+  const paths = data.page ? data?.page.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/') : data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/')
   const typePage = [
     {
     name: "Categories",
@@ -41,6 +44,7 @@
             <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" bind:value={$form.name}>
           </div>
         </div>
+        
         <div class="col-span-full">
           <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
           <div class="mt-2">
@@ -83,7 +87,7 @@
           {#each typePage as { slug, name }, i}
             
             <div class="flex items-center gap-x-3">
-              <input id="category" name="typePage" type="radio" bind:group={$form.typePage} value={slug} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
+              <input id="category" name="typeCategory" type="radio" bind:group={$form.typeCategory} value={slug} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
               <label for="category" class="block text-sm font-medium leading-6 text-gray-900">{name}</label>
             </div>
           {/each}
@@ -91,7 +95,12 @@
         </div>
       </fieldset>
     </div>
-
+    <div class="col-span-full">
+      <label for="paths" class="block text-sm font-medium leading-6 text-gray-900">Paths</label>
+      <div class="mt-2">
+        <input type="text" name="paths" id="paths" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="/{paths}" >
+      </div>
+    </div>
     
   </div>
 

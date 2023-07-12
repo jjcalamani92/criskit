@@ -1,6 +1,8 @@
 // @ts-nocheck
 
 import { env } from '$env/dynamic/private';
+import { getCategories, getCategory } from '$lib/fetch/categories';
+import { schemaCategory } from '$lib/zod/categories';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 
@@ -27,70 +29,59 @@ export const config = {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-	const response = await fetch(`${env.API_URL}/api/graphql`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			query: `
-      query GetCategoriesByParentId($type: String!, $parentId: String!, $i: String!) {
-				getCategoriesByParentId(type: $type, parentId: $parentId, i: $i) {
-					_id
-					data{
-						name
-						description
-						thumbnailUrl
-						type
-					}
-					
-				}
-			}
-      `,
-			variables: {
-				type: params.type,
-				parentId: params.uid,
-				i: `${+params.i+1}`
-			}
-		})
-	});
-
-	const {
-		data: { getCategoriesByParentId: categories }
-	} = await response.json();
 
 	
-	let response0 = await fetch(`${env.API_URL}/api/graphql`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({
-			query: `
-			query GetCategory($type: String!, $id: String!, $i: String!) {
-				getCategory(type: $type, id: $id, i: $i) {
-					_id
-					data{
-						name
-						params{
-							path
-							paths{
-								name
-							}
-						}
-					}
-					
-				}
-			}
-			`,
-			variables: {
-				type: params.type,
-				id: params.uid,
-				i: params.i
-			}
-		})
-	}).then((data) => data.json());
-	const category = response0.data.getCategory
 
-	let form = await superValidate(newCategory);
+
+
+
+
+
+	const categories = await getCategories(params)
+	const category = await getCategory(params)
+	// console.log('category0', category0)
+
+	// let response0 = await fetch(`${env.API_URL}/api/graphql`, {
+	// 	method: 'POST',
+	// 	headers: { 'Content-Type': 'application/json' },
+	// 	body: JSON.stringify({
+	// 		query: `
+	// 		query GetCategory($type: String!, $id: String!, $i: String!) {
+	// 			getCategory(type: $type, id: $id, i: $i) {
+	// 				_id
+	// 				data{
+	// 					name
+	// 					description
+	// 					thumbnailUrl
+	// 					params{
+	// 						path
+	// 						paths{
+	// 							name
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 		`,
+	// 		variables: {
+	// 			type: params.type,
+	// 			id: params.uid,
+	// 			i: params.i
+	// 		}
+	// 	})
+	// }).then((data) => data.json());
+	// const category = response0.data.getCategory
+
+	let formEditCategory = await superValidate({
+		id: category._id,
+		name: category.data.name,
+		description: category.data.description,
+		thumbnailUrl: category.data.thumbnailUrl,
+		typeCategory: category.data.type
+	}, schemaCategory);
+	let formAddCategory = await superValidate(schemaCategory);
 	
-	return { category, categories, form };
+	return { category, categories, formAddCategory, formEditCategory };
 }
 
 

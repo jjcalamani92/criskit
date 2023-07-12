@@ -4,13 +4,16 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
 
-  /**
-	 * @type {{ form: import("sveltekit-superforms").SuperValidated<import("sveltekit-superforms").ZodValidation<import("zod").AnyZodObject>, any>; category: { data: { params: { paths: any; }; }; }; }}
-	 */
+
    export let data;
+  //  console.log('dataaa', data)
   // console.log(data?.data.params.paths)
-  const { form } = superForm(data.form)
-  const paths = data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/')
+  // @ts-ignore
+  const { form } = superForm(data.formAddCategory, {
+    id: "12345"
+  })
+  // console.log('data.page', data.page)
+  const paths = data.page ? data?.page.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/') : data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/')
   const typePage = [
     {
     name: "Categories",
@@ -84,7 +87,7 @@
           {#each typePage as { slug, name }, i}
             
             <div class="flex items-center gap-x-3">
-              <input id="category" name="typeCategory" type="radio" bind:group={$form.typePage} value={slug} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
+              <input id="category" name="typeCategory" type="radio" bind:group={$form.typeCategory} value={slug} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
               <label for="category" class="block text-sm font-medium leading-6 text-gray-900">{name}</label>
             </div>
           {/each}

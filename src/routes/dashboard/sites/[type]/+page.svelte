@@ -7,12 +7,14 @@
 	import { page } from '$app/stores';
 	import { capitalizeName } from '$lib/utils/capitalize.js';
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte';
+	import FormsSlideOversAdd from '$lib/components/FormsSlideOversAdd.svelte';
+	import Headings from '$lib/components/Headings.svelte';
 	
     export let data;
 		// console.log('data', data)
 </script>
-<FormsSlideOvers title={'New Site'} >
+<FormsSlideOversAdd title={'New Site'} >
 	<FormSite {data} />
-</FormsSlideOvers>
-<PageHeadings title={`Sites ${capitalizeName($page.params.type)}`} />
+</FormsSlideOversAdd>
+<Headings title={`Sites ${capitalizeName($page.params.type)}`} />
 <ListSites sites={data.sites}/>

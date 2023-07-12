@@ -13,6 +13,8 @@ function createUI() {
 
 export const cart = createUI();
 export const form = createUI();
+export const formAdd = createUI();
+export const formUpdate = createUI();
 export const modal = createUI();
 export const menu = createUI();
 export const search = createUI();

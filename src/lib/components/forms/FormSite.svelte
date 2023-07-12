@@ -4,8 +4,8 @@
 	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
 
   export let data;
-
-  const { form } = superForm(data.form)
+  console.log('data', data)
+  const { form } = superForm(data.formSite)
 </script>
 <form method="POST" action="?/create">
   <div class="space-y-6">

@@ -2,7 +2,7 @@
 	import FormsSlideOvers from '$lib/components/FormsSlideOvers.svelte';
 	import ListProducts from '$lib/components/ListProducts.svelte';
 	import PageHeadings from '$lib/components/PageHeadings.svelte';
-	import FormCategory from '$lib/components/forms/FormCategory.svelte';
+	import FormCategory from '$lib/components/forms/FormCategoryAdd.svelte';
 	import FormProduct from '$lib/components/forms/FormProduct.svelte';
 
     /** @type {import('./$types').PageData} */
