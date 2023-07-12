@@ -32,7 +32,7 @@
 		<div
 			class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8"
 		>
-			{#each products as { _id, slug, parentId, data: { name, thumbnailUrl, type } }, i}
+			{#each products as { _id, slug, parentId, data: { name, thumbnailUrl, } }, i}
 				<a
 					href={`/dashboard/sites/${$page.params.type}/${$page.params.id}/products/${parentId}/${slug}/${_id}`}
 					class="group"

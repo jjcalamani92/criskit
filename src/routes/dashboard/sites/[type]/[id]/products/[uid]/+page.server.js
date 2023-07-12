@@ -34,6 +34,8 @@ export async function load({ params }) {
       query GetProductsByParentId($type: String!, $parentId: String!) {
 				getProductsByParentId(type: $type, parentId: $parentId ) {
 					_id
+					parentId
+					slug
 					data{
 						name
 						description

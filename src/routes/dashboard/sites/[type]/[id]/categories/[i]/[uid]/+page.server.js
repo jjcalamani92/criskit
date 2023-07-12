@@ -167,7 +167,7 @@ export const actions = {
 			siteId: params.id,
 			type: params.type,
 			uid: '123456789',
-			i: params.i,
+			i: `${+params.i+1}`,
 		};
 		
 		const res = await fetch(`${env.API_URL}/api/graphql`, {
