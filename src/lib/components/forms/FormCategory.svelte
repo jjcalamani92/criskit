@@ -10,7 +10,21 @@
    export let data;
   // console.log(data?.data.params.paths)
   const { form } = superForm(data.form)
-  
+  const paths = data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/')
+  const typePage = [
+    {
+    name: "Categories",
+    slug: "category",
+    }, 
+    {
+    name: "Products",
+    slug: "product",
+    }, 
+    {
+    name: "Articles",
+    slug: "article",
+    }, 
+  ]
 </script>
 <!-- <SuperDebug data={$form} /> -->
 <form method="POST" action="?/create">
@@ -67,25 +81,21 @@
         <legend class="text-sm font-semibold leading-6 text-gray-900">Type</legend>
         <p class="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
         <div class="mt-6 space-y-6">
-          <div class="flex items-center gap-x-3">
-            <input id="category" name="type" type="radio" bind:value={$form.typePage} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
-            <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Categories</label>
-          </div>
-          <div class="flex items-center gap-x-3">
-            <input id="product" name="type" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" value="product">
-            <label for="product" class="block text-sm font-medium leading-6 text-gray-900">Products</label>
-          </div>
-          <div class="flex items-center gap-x-3">
-            <input id="article" name="type" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" value="blog">
-            <label for="article" class="block text-sm font-medium leading-6 text-gray-900">Blogs</label>
-          </div>
+          {#each typePage as { slug, name }, i}
+            
+            <div class="flex items-center gap-x-3">
+              <input id="category" name="typeCategory" type="radio" bind:group={$form.typePage} value={slug} class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" >
+              <label for="category" class="block text-sm font-medium leading-6 text-gray-900">{name}</label>
+            </div>
+          {/each}
+          
         </div>
       </fieldset>
     </div>
     <div class="col-span-full">
       <label for="paths" class="block text-sm font-medium leading-6 text-gray-900">Paths</label>
       <div class="mt-2">
-        <input type="text" name="paths" id="paths" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value={data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name)} >
+        <input type="text" name="paths" id="paths" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" value="/{paths}" >
       </div>
     </div>
     

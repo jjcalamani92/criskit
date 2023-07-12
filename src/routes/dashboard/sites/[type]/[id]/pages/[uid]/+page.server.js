@@ -7,7 +7,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const newCategory = z.object({
-	name: z.string().min(1).default('Name Category'),
+	name: z.string().min(1).default('Name'),
 	description: z.string().min(1).default('Description Category'),
 	thumbnailUrl: z
 		.string()
@@ -16,7 +16,7 @@ const newCategory = z.object({
 			'https://res.cloudinary.com/dcpr6059h/image/upload/v1689077267/icon-image-not-found-free-vector_aro2ip.jpg'
 		),
 	typeCategory: z.string().default('category'),
-	paths: z.string().array()
+	paths: z.string()
 });
 
 export const config = {
@@ -109,7 +109,7 @@ export const actions = {
 
 		const input = {
 			...form.data,
-			paths: form.data.paths[0].split(','),
+			paths: form.data.paths.split('/').slice(1),
 			parentId: params.uid,
 			siteId: params.id,
 			type: params.type,

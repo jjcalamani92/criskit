@@ -16,7 +16,7 @@ const newCategory = z.object({
 			'https://res.cloudinary.com/dcpr6059h/image/upload/v1689077267/icon-image-not-found-free-vector_aro2ip.jpg'
 		),
 	typeCategory: z.string().default('category'),
-	paths: z.string().array()
+	paths: z.string()
 });
 
 export const config = {
@@ -57,68 +57,7 @@ export async function load({ params }) {
 		data: { getCategoriesByParentId: categories }
 	} = await response.json();
 
-	// let response0
-	// let page
-	// const response2 = await fetch(`${env.API_URL}/api/graphql`, {
-	// 	method: 'POST',
-	// 	headers: { 'Content-Type': 'application/json' },
-	// 	body: JSON.stringify({
-	// 		query: `
-  //     query GetPage($type: String!, $id: String!) {
-	// 			getPage(type: $type, id: $id) {
-	// 				_id
-	// 				data{
-	// 					name
-	// 					params{
-	// 						path
-	// 						paths{
-	// 							name
-	// 						}
-	// 					}
-	// 				}
-					
-	// 			}
-	// 		}
-  //     `,
-	// 		variables: {
-	// 			type: params.type,
-	// 			id: "64ad978e5f570ada0dbfaa85"
-	// 		}
-	// 	})
-	// });
-
-	// if (params.i === '0') {
-		
-	// 	 response0 = await fetch(`${env.API_URL}/api/graphql`, {
-	// 		method: 'POST',
-	// 		headers: { 'Content-Type': 'application/json' },
-	// 		body: JSON.stringify({
-	// 			query: `
-	// 			query GetPage($type: String!, $id: String!) {
-	// 				getPage(type: $type, id: $id) {
-	// 					_id
-	// 					data{
-	// 						name
-	// 						params{
-	// 							path
-	// 							paths{
-	// 								name
-	// 							}
-	// 						}
-	// 					}
-						
-	// 				}
-	// 			}
-	// 			`,
-	// 			variables: {
-	// 				type: params.type,
-	// 				id: params.uid
-	// 			}
-	// 		})
-	// 	}).then(data => data.json());
-	// 	page = response0.data.getPage
-	// } else {
-	// }
+	
 	let response0 = await fetch(`${env.API_URL}/api/graphql`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -162,14 +101,14 @@ export const actions = {
 
 		const input = {
 			...form.data,
-			paths: form.data.paths[0].split(','),
+			paths: form.data.paths.split('/').slice(1),
 			parentId: params.uid,
 			siteId: params.id,
 			type: params.type,
 			uid: '123456789',
 			i: `${+params.i+1}`,
 		};
-		
+		// console.log('input', input)
 		const res = await fetch(`${env.API_URL}/api/graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

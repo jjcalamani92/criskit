@@ -108,7 +108,7 @@ export const actions = {
 			type: params.type,
 			uid: '123456789'
 		};
-
+		// console.log('input', input)
 		const res = await fetch(`${env.API_URL}/api/graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },

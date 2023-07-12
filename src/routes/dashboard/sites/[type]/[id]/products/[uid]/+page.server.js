@@ -15,7 +15,7 @@ const newProduct = z.object({
 		.default(
 			'https://res.cloudinary.com/dcpr6059h/image/upload/v1689077267/icon-image-not-found-free-vector_aro2ip.jpg'
 		),
-	paths: z.string().array()
+	paths: z.string()
 });
 
 export const config = {
@@ -108,7 +108,7 @@ export const actions = {
 
 		const input = {
 			...form.data,
-			paths: form.data.paths[0].split(','),
+			paths: form.data.paths.split('/').slice(1),
 			parentId: params.uid,
 			siteId: params.id,
 			type: params.type,
