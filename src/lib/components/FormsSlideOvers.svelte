@@ -35,7 +35,8 @@
               To: "translate-x-full"
           -->
           <!-- overflow-y-scroll -->
-          <div class="pointer-events-auto w-screen max-w-md" use:clickOutside on:click_outside={form.close}>
+          <div class="pointer-events-auto w-screen max-w-md" use:clickOutside >
+          <!-- <div class="pointer-events-auto w-screen max-w-md" use:clickOutside on:click_outside={form.close}> -->
             <div class="flex h-full flex-col   bg-white shadow-xl">
               <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                 <div class="flex items-start justify-between">

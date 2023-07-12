@@ -1,22 +1,17 @@
 <script>
 	import FormsSlideOvers from '$lib/components/FormsSlideOvers.svelte';
 	import ListCategories from '$lib/components/ListCategories.svelte';
-	import ListPages from '$lib/components/ListPages.svelte';
 	import PageHeadings from '$lib/components/PageHeadings.svelte';
 	import FormCategory from '$lib/components/forms/FormCategory.svelte';
-	import FormPage from '$lib/components/forms/FormPage.svelte';
-	import Grid from '$lib/components/ui/Grid.svelte';
-	import Grid0 from '$lib/components/ui/Grid0.svelte';
-	import MinMax from '$lib/components/ui/MinMax.svelte';
-	import ProgressBar from '$lib/components/ui/ProgressBar.svelte';
+	
   export let data;
-		
+		console.log('data', data)
 </script>
 <FormsSlideOvers title={'New Category'} >
-	<FormCategory {data} />
+	<FormCategory data={{form: data.form, category: data.page} } />
 </FormsSlideOvers>
 <PageHeadings title={data.page.data.name} />
-<ListCategories />
+<ListCategories categories={data.categories}/>
 
 
 

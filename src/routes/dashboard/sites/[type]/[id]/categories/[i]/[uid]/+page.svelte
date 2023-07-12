@@ -9,7 +9,7 @@
 <FormsSlideOvers title={'New Category'} >
 	<FormCategory {data} />
 </FormsSlideOvers>
-<PageHeadings title={data.page.data.name} />
+<PageHeadings title={data.category.data.name} />
 <ListCategories categories={data.categories} />
 
 

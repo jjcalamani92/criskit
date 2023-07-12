@@ -9,6 +9,8 @@ import { existsSite, getSite, getSites } from '$lib/db/sites/get';
 import { addSite } from '$lib/db/sites/add';
 import { getCategories, getCategoriesByParentId, getCategoriesBySiteId, getCategory } from '$lib/db/categories/query';
 import { addCategory, deleteCategoriesById, updateCategory } from '$lib/db/categories/mutation';
+import { existsProduct, getProduct, getProducts, getProductsByParentId, getProductsBySiteId } from '$lib/db/products/query';
+import { addProduct, deleteProductById, deleteProductsById, updateProduct } from '$lib/db/products/mutation';
 
 const yogaApp = createYoga({
 	logging: false,
@@ -89,6 +91,22 @@ const yogaApp = createYoga({
 				parentId: String
 				slug: String
 			}
+			# Product
+			type DataProduct {
+				name: String
+				description: String
+				thumbnailUrl: String
+				images: [String]
+				siteId: String
+				params: Params
+				updateDate: UpdateDate
+			}
+			type Product {
+				_id: ID
+				data: DataProduct
+				parentId: String
+				slug: String
+			}
 			# INPUT SITE
 			input SiteInput {
 				type: String!
@@ -116,6 +134,18 @@ const yogaApp = createYoga({
 				i: String!
 				type: String!
 				typeCategory: String
+				name: String!
+				parentId: String
+				siteId: String
+				description: String
+				thumbnailUrl: String
+				uid: String
+				paths: [String]
+			}
+			# INPUT PRODUCT
+			input ProductInput {
+				id: String
+				type: String!
 				name: String!
 				parentId: String
 				siteId: String
@@ -153,6 +183,10 @@ const yogaApp = createYoga({
 				getPagesBySiteId(type: String!, siteId: String!): [Page]
 				getPages(type: String!): [Page]
 				getPage(type: String!, id: String!): Page
+				getProductsByParentId(type: String!, parentId: String!): [Product]
+				getProductsBySiteId(type: String!, siteId: String!): [Product]
+				getProducts(type: String!): [Product]
+				getProduct(type: String!, id: String!): Product
 				getCategoriesByParentId(type: String!, parentId: String!, i: String!): [Category]
 				getCategoriesBySiteId(type: String!, siteId: String!, i: String!): [Category]
 				getCategories(type: String!, i: String!): [Category]
@@ -166,6 +200,11 @@ const yogaApp = createYoga({
 				updatePage(input: PageInput!): String
 				deletePagesById(type: String!, ids: [String]!): String
 				deletePageById(type: String!, id: String!): String
+				addCategory(input: CategoryInput!): String
+				addProduct(input: ProductInput!): String
+				updateProduct(input: ProductInput!): String
+				deleteProductsById(type: String!, ids: [String]!): String
+				deleteProductById(type: String!, id: String!): String
 				addCategory(input: CategoryInput!): String
 				updateCategory(input: CategoryInput!): String
 				deleteCategoriesById(type: String!, ids: [String]!, i:String!): String
@@ -184,6 +223,10 @@ const yogaApp = createYoga({
 				getPagesByParentId: async (_, { type, parentId }) => await getPagesByParentId(type, parentId),
 				getPagesBySiteId: async (_, { type, siteId }) => await getPagesBySiteId(type, siteId),
 				getPage: async (_, { type, id }) => await getPage(type, id),
+				getProducts: async (_, { type }) => await getProducts(type),
+				getProductsByParentId: async (_, { type, parentId }) => await getProductsByParentId(type, parentId),
+				getProductsBySiteId: async (_, { type, siteId }) => await getProductsBySiteId(type, siteId),
+				getProduct: async (_, { type, id }) => await getProduct(type, id),
 				getCategories: async (_, { type, i }) => await getCategories(type, i),
 				getCategoriesByParentId: async (_, { type, parentId, i }) => await getCategoriesByParentId(type, parentId, i),
 				getCategoriesBySiteId: async (_, { type, siteId, i }) => await getCategoriesBySiteId(type, siteId, i),
@@ -201,6 +244,13 @@ const yogaApp = createYoga({
 				updatePage: async (parent, {input}, ) => {
 					return await updatePage(input);
 				},
+				addProduct: async (parent, { input }, ) => {
+					await existsProduct(input.type, input.name, input.parentId);
+					return await addProduct(input);
+				},
+				updateProduct: async (parent, {input}, ) => {
+					return await updateProduct(input);
+				},
 				addCategory: async (parent, { input }, ) => {
 					
 					return await addCategory(input);
@@ -217,6 +267,12 @@ const yogaApp = createYoga({
 				},
 				deletePageById: async (parent, {type, id}, ) => {
 					return await deletePageById(type, id)
+				},
+				deleteProductsById: async (parent, {type, ids}, ) => {
+					return await deleteProductsById(type, ids)
+				},
+				deleteProductById: async (parent, {type, id}, ) => {
+					return await deleteProductById(type, id)
 				},
 				
 			},
