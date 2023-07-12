@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import Headers from '$lib/components/headers/Headers.svelte';
 	import ProgressBar from '$lib/components/ui/ProgressBar.svelte';
 
 	import Header from './Header.svelte';
@@ -10,7 +11,8 @@
 
 <div class="app">
 	{#if !$page.url.pathname.startsWith('/dashboard')}
-	<Header />
+	<Headers />
+	<!-- <Header /> -->
 	{/if}
 
 	<main>
