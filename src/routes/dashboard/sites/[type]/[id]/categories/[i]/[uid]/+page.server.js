@@ -7,7 +7,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { z } from 'zod';
 
 const newCategory = z.object({
-	name: z.string().min(1).default('Name Category'),
+	name: z.string().min(1).default('Name'),
 	description: z.string().min(1).default('Description Category'),
 	thumbnailUrl: z
 		.string()
@@ -162,6 +162,7 @@ export const actions = {
 
 		const input = {
 			...form.data,
+			paths: form.data.paths[0].split(','),
 			parentId: params.uid,
 			siteId: params.id,
 			type: params.type,

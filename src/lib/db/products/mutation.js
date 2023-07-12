@@ -9,7 +9,6 @@ import { GraphQLError } from 'graphql';
 
 const nameCollection = 'products';
 
-
 /**
  * @param {{ name: string; parentId: string; description: string; siteId: string; uid: string; type: string; thumbnailUrl: string; paths: string[]}} body
  */
@@ -41,7 +40,7 @@ export async function addProduct(body) {
 				register: [
 					{
 						uid: uid,
-						change: 'create page',
+						change: 'create product',
 						updatedAt: new Date()
 					}
 				]
