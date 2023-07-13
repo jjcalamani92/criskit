@@ -4,12 +4,10 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import  SuperDebug  from 'sveltekit-superforms/client/SuperDebug.svelte';
 
-  /**
-	 * @type {{ form: import("sveltekit-superforms").SuperValidated<import("sveltekit-superforms").ZodValidation<import("zod").AnyZodObject>, any>; category: { data: { params: { paths: { name: any; }[]; }; }; }; }}
-	 */
+
    export let data;
 
-  const { form } = superForm(data.form)
+  const { form } = superForm(data.formArticle)
   const paths = data?.category.data.params.paths.map((/** @type {{ name: any; }} */ data) => data.name).join('/')
 </script>
 <!-- <SuperDebug data={$form} /> -->

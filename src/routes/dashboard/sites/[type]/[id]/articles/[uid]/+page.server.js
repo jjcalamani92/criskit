@@ -1,9 +1,9 @@
 // @ts-nocheck
 
 import { getCategoryInAll } from '$lib/fetch/categories';
-import { addProduct, getProductsByParentId } from '$lib/fetch/products';
+import { addArticle, getArticlesByParentId } from '$lib/fetch/articles';
 import { schemaCategory } from '$lib/zod/categories';
-import { schemaProduct } from '$lib/zod/products';
+import { schemaArticle } from '$lib/zod/articles';
 import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 
@@ -18,7 +18,7 @@ export const config = {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
-	const products = await getProductsByParentId(params)
+	const articles = await getArticlesByParentId(params)
 
 	const category = await getCategoryInAll(params)
 	let formEditCategory = await superValidate({
@@ -28,10 +28,10 @@ export async function load({ params }) {
 		thumbnailUrl: category.data.thumbnailUrl,
 		typeCategory: category.data.type
 	}, schemaCategory);
-	let formProduct = await superValidate(schemaProduct);
+	let formArticle = await superValidate(schemaArticle);
 	
 
-	return { category, products, formProduct, formEditCategory };
+	return { category, articles, formArticle, formEditCategory };
 }
 
 // export const actions = {
@@ -44,7 +44,7 @@ export async function load({ params }) {
 
 export const actions = {
 	create: async ({ request, params }) => {
-		const form = await superValidate(request, schemaProduct);
+		const form = await superValidate(request, schemaArticle);
 		if (!form.valid) return fail(400, { form });
 
 		const input = {
@@ -57,7 +57,7 @@ export const actions = {
 			
 		};
 		
-		return await addProduct(input)
+		return await addArticle(input)
 		
 		// db.createTodo(cookies.get('userid'), data.get('description'));
 	}

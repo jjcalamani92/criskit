@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 	import Headers from '$lib/components/headers/Headers.svelte';
 	import './styles.css';
+	import 'bytemd/dist/index.css'
+
 </script>
 
 

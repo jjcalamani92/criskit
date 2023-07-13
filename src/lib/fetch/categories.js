@@ -91,6 +91,9 @@ export async function getCategoryInAll(params) {
 					_id
 					data{
 						name
+						description
+						thumbnailUrl
+						type
 						params{
 							path
 							paths{

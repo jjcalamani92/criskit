@@ -39,38 +39,7 @@ export async function load({ params }) {
 
 	const categories = await getCategories(params)
 	const category = await getCategory(params)
-	// console.log('category0', category0)
-
-	// let response0 = await fetch(`${env.API_URL}/api/graphql`, {
-	// 	method: 'POST',
-	// 	headers: { 'Content-Type': 'application/json' },
-	// 	body: JSON.stringify({
-	// 		query: `
-	// 		query GetCategory($type: String!, $id: String!, $i: String!) {
-	// 			getCategory(type: $type, id: $id, i: $i) {
-	// 				_id
-	// 				data{
-	// 					name
-	// 					description
-	// 					thumbnailUrl
-	// 					params{
-	// 						path
-	// 						paths{
-	// 							name
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 		`,
-	// 		variables: {
-	// 			type: params.type,
-	// 			id: params.uid,
-	// 			i: params.i
-	// 		}
-	// 	})
-	// }).then((data) => data.json());
-	// const category = response0.data.getCategory
+	
 
 	let formEditCategory = await superValidate({
 		id: category._id,
