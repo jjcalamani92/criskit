@@ -1,14 +1,24 @@
 <script>
+	import { fade, fly, slide } from "svelte/transition";
 	import { formAdd } from "../stores";
 	import clickOutside from "../utils/clickOutside";
+	import { backIn, backOut, cubicInOut, cubicOut, linear, quintIn, quintInOut, quintOut, sineIn, sineInOut, sineOut } from "svelte/easing";
+	import { logicalPropertiesHorizontalSlide } from "$lib/utils/transitions";
   /**
 	 * @type {string}
 	 */
   export let title;
+
 	
+
+
 </script>
 {#if $formAdd}
-  <div class="relative z-20" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="relative z-20" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" >
+    
+    <div transition:fade={{ duration: 500 }}>
+
+    
     <!--
       Background backdrop, show/hide based on slide-over state.
 
@@ -23,7 +33,10 @@
 
     <div class="fixed inset-0 overflow-hidden">
       <div class="absolute inset-0 overflow-hidden">
-        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10" >
+
+            
+
           <!--
             Slide-over panel, show/hide based on slide-over state.
 
@@ -35,7 +48,7 @@
               To: "translate-x-full"
           -->
           <!-- overflow-y-scroll -->
-          <div class="pointer-events-auto w-screen max-w-md" use:clickOutside >
+          <div class="pointer-events-auto w-screen max-w-md " use:clickOutside transition:fly={{ duration: 500, x:800, easing: linear,}} on:click_outside={formAdd.close}>
           <!-- <div class="pointer-events-auto w-screen max-w-md" use:clickOutside on:click_outside={form.close}> -->
             <div class="flex h-full flex-col   bg-white shadow-xl">
               <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
@@ -71,6 +84,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 {/if}

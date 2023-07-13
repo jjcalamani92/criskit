@@ -1,6 +1,8 @@
 <script>
+	import { fade, fly } from "svelte/transition";
 	import { formUpdate } from "../stores";
 	import clickOutside from "../utils/clickOutside";
+	import { linear } from "svelte/easing";
   /**
 	 * @type {string}
 	 */
@@ -8,7 +10,7 @@
 	
 </script>
 {#if $formUpdate}
-  <div class="relative z-20" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="relative z-20" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" transition:fade={{ duration: 500 }}>
     <!--
       Background backdrop, show/hide based on slide-over state.
 
@@ -35,7 +37,7 @@
               To: "translate-x-full"
           -->
           <!-- overflow-y-scroll -->
-          <div class="pointer-events-auto w-screen max-w-md" use:clickOutside >
+          <div class="pointer-events-auto w-screen max-w-md" transition:fly={{ duration: 500, x:800, easing: linear,}} use:clickOutside on:click_outside={formUpdate.close}>
           <!-- <div class="pointer-events-auto w-screen max-w-md" use:clickOutside on:click_outside={form.close}> -->
             <div class="flex h-full flex-col   bg-white shadow-xl">
               <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">

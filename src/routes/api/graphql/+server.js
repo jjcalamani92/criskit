@@ -34,6 +34,8 @@ import {
 	deleteProductsById,
 	updateProduct
 } from '$lib/db/products/mutation';
+import { existsArticle, getArticle, getArticles, getArticlesByParentId, getArticlesBySiteId } from '$lib/db/articles/query';
+import { addArticle, deleteArticleById, deleteArticlesById, updateArticle } from '$lib/db/articles/mutation';
 
 const yogaApp = createYoga({
 	logging: false,
@@ -50,13 +52,13 @@ const yogaApp = createYoga({
 				lastUpdatedAt: Date
 				register: [Register]
 			}
-			type Paths {
+			type Slug {
 				name: String
 				slug: String
 			}
 			type Params {
 				path: [String]
-				paths: [Paths]
+				paths: [Slug]
 			}
 			# Site
 			type Theme {
@@ -122,11 +124,35 @@ const yogaApp = createYoga({
 				images: [String]
 				siteId: String
 				params: Params
+				price: Float
+				discountPrice: Float
+				url: String
 				updateDate: UpdateDate
 			}
 			type Product {
 				_id: ID
 				data: DataProduct
+				parentId: String
+				slug: String
+			}
+			# Product
+			type DataArticle {
+				name: String
+				description: String
+				thumbnailUrl: String
+				content: String
+				author: [Slug]
+				category: [Slug]
+				tags: [Slug]
+				images: [String]
+				siteId: String
+				params: Params
+				url: String
+				updateDate: UpdateDate
+			}
+			type Article {
+				_id: ID
+				data: DataArticle
 				parentId: String
 				slug: String
 			}
@@ -202,14 +228,22 @@ const yogaApp = createYoga({
 				hello: String
 				getSites(type: String!): [Site]
 				getSite(type: String!, id: String!): Site
+				#Page
 				getPagesByParentId(type: String!, parentId: String!): [Page]
 				getPagesBySiteId(type: String!, siteId: String!): [Page]
 				getPages(type: String!): [Page]
 				getPage(type: String!, id: String!): Page
+				#Product
 				getProductsByParentId(type: String!, parentId: String!): [Product]
 				getProductsBySiteId(type: String!, siteId: String!): [Product]
 				getProducts(type: String!): [Product]
 				getProduct(type: String!, id: String!): Product
+				#Article
+				getArticlesByParentId(type: String!, parentId: String!): [Article]
+				getArticlesBySiteId(type: String!, siteId: String!): [Article]
+				getArticles(type: String!): [Article]
+				getArticle(type: String!, id: String!): Article
+				#Categories
 				getCategoriesByParentId(type: String!, parentId: String!, i: String!): [Category]
 				getCategoriesBySiteId(type: String!, siteId: String!, i: String!): [Category]
 				getCategories(type: String!, i: String!): [Category]
@@ -220,14 +254,22 @@ const yogaApp = createYoga({
 				updateSite(type: String!, id: String!, input: SiteInput!): String
 				updateSiteComponent(input: UpdateSiteComponent!): String
 				addSite(input: SiteInput!): String
+				#Page
 				addPage(input: PageInput!): String
 				updatePage(input: PageInput!): String
 				deletePagesById(type: String!, ids: [String]!): String
 				deletePageById(type: String!, id: String!): String
+				#Product
 				addProduct(input: ProductInput!): String
 				updateProduct(input: ProductInput!): String
 				deleteProductsById(type: String!, ids: [String]!): String
 				deleteProductById(type: String!, id: String!): String
+				#Article
+				addArticle(input: ArticleInput!): String
+				updateArticle(input: ArticleInput!): String
+				deleteArticlesById(type: String!, ids: [String]!): String
+				deleteArticleById(type: String!, id: String!): String
+				#Category
 				addCategory(input: CategoryInput!): String
 				updateCategory(input: CategoryInput!): String
 				deleteCategoriesById(type: String!, ids: [String]!, i: String!): String
@@ -242,29 +284,39 @@ const yogaApp = createYoga({
 				hello: () => 'SvelteKit - GraphQL Yoga',
 				getSites: async (_, { type }) => await getSites(type),
 				getSite: async (_, { type, id }) => await getSite(type, id),
+				// Page
 				getPages: async (_, { type }) => await getPages(type),
 				getPagesByParentId: async (_, { type, parentId }) =>
 					await getPagesByParentId(type, parentId),
 				getPagesBySiteId: async (_, { type, siteId }) => await getPagesBySiteId(type, siteId),
 				getPage: async (_, { type, id }) => await getPage(type, id),
+				// Product
 				getProducts: async (_, { type }) => await getProducts(type),
 				getProductsByParentId: async (_, { type, parentId }) =>
 					await getProductsByParentId(type, parentId),
 				getProductsBySiteId: async (_, { type, siteId }) => await getProductsBySiteId(type, siteId),
 				getProduct: async (_, { type, id }) => await getProduct(type, id),
+				// Category
 				getCategories: async (_, { type, i }) => await getCategories(type, i),
 				getCategoriesByParentId: async (_, { type, parentId, i }) =>
 					await getCategoriesByParentId(type, parentId, i),
 				getCategoriesBySiteId: async (_, { type, siteId, i }) =>
 					await getCategoriesBySiteId(type, siteId, i),
 				getCategory: async (_, { type, id, i }) => await getCategory(type, id, i),
-				getCategoryInAll: async (_, { type, id }) => await getCategoryInAll(type, id)
+				getCategoryInAll: async (_, { type, id }) => await getCategoryInAll(type, id),
+				// Article
+				getArticles: async (_, { type }) => await getArticles(type),
+				getArticlesByParentId: async (_, { type, parentId }) =>
+					await getArticlesByParentId(type, parentId),
+				getArticlesBySiteId: async (_, { type, siteId }) => await getArticlesBySiteId(type, siteId),
+				getArticle: async (_, { type, id }) => await getArticle(type, id),
 			},
 			Mutation: {
 				addSite: async (parent, { input }) => {
 					await existsSite(input.type, input.url);
 					return await addSite(input);
 				},
+				// Page
 				addPage: async (parent, { input }) => {
 					await existsPage(input.type, input.name, input.parentId);
 					return await addPage(input);
@@ -272,6 +324,7 @@ const yogaApp = createYoga({
 				updatePage: async (parent, { input }) => {
 					return await updatePage(input);
 				},
+				// Product
 				addProduct: async (parent, { input }) => {
 					await existsProduct(input.type, input.name, input.parentId);
 					return await addProduct(input);
@@ -279,6 +332,27 @@ const yogaApp = createYoga({
 				updateProduct: async (parent, { input }) => {
 					return await updateProduct(input);
 				},
+				deleteProductsById: async (parent, { type, ids }) => {
+					return await deleteProductsById(type, ids);
+				},
+				deleteProductById: async (parent, { type, id }) => {
+					return await deleteProductById(type, id);
+				},
+				// Article
+				addArticle: async (parent, { input }) => {
+					await existsArticle(input.type, input.name, input.parentId);
+					return await addArticle(input);
+				},
+				updateArticle: async (parent, { input }) => {
+					return await updateArticle(input);
+				},
+				deleteArticlesById: async (parent, { type, ids }) => {
+					return await deleteArticlesById(type, ids);
+				},
+				deleteArticleById: async (parent, { type, id }) => {
+					return await deleteArticleById(type, id);
+				},
+				// Category
 				addCategory: async (parent, { input }) => {
 					return await addCategory(input);
 				},
@@ -295,12 +369,7 @@ const yogaApp = createYoga({
 				deletePageById: async (parent, { type, id }) => {
 					return await deletePageById(type, id);
 				},
-				deleteProductsById: async (parent, { type, ids }) => {
-					return await deleteProductsById(type, ids);
-				},
-				deleteProductById: async (parent, { type, id }) => {
-					return await deleteProductById(type, id);
-				}
+				
 			},
 			Subscription: {
 				countdown: {

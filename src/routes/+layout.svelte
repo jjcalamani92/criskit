@@ -1,18 +1,14 @@
 <script>
 	import { page } from '$app/stores';
 	import Headers from '$lib/components/headers/Headers.svelte';
-	import ProgressBar from '$lib/components/ui/ProgressBar.svelte';
-
-	import Header from './Header.svelte';
 	import './styles.css';
 </script>
 
 
 
-<div class="app">
+<div >
 	{#if !$page.url.pathname.startsWith('/dashboard')}
-	<Headers />
-	<!-- <Header /> -->
+		<Headers />
 	{/if}
 
 	<main>
