@@ -15,8 +15,8 @@ export async function getArticle(params) {
 					data{
 						name
 						description
-						type
 						thumbnailUrl
+						content
 						params{
 							path
 							paths{
