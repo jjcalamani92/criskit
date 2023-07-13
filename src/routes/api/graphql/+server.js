@@ -203,6 +203,20 @@ const yogaApp = createYoga({
 				uid: String
 				paths: [String]
 			}
+			# INPUT ARTICLE
+			input ArticleInput {
+				id: String
+				type: String!
+				name: String!
+				parentId: String
+				author: [String]
+				content: String
+				siteId: String
+				description: String
+				thumbnailUrl: String
+				uid: String
+				paths: [String]
+			}
 			input Content {
 				h1: String
 				h2: String
