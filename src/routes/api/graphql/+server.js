@@ -70,7 +70,6 @@ const yogaApp = createYoga({
 				name: String
 				icon: String
 				description: String
-				website: String
 			}
 			type DataSite {
 				type: String

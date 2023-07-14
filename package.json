@@ -45,11 +45,15 @@
 	"dependencies": {
 		"@auth/core": "^0.9.0",
 		"@auth/sveltekit": "^0.3.5",
+		"@bytemd/plugin-frontmatter": "^1.21.0",
 		"@bytemd/plugin-gfm": "^1.21.0",
+		"@bytemd/plugin-highlight": "^1.21.0",
+		"@bytemd/plugin-math": "^1.21.0",
 		"@sveltejs/adapter-vercel": "^3.0.1",
 		"bytemd": "^1.21.0",
 		"graphql": "^16.7.1",
 		"graphql-yoga": "^4.0.3",
+		"highlight.js": "^11.8.0",
 		"mongodb": "^5.7.0",
 		"slugify": "^1.6.6"
 	}
