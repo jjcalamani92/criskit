@@ -20,4 +20,3 @@ export const menu = createUI();
 export const search = createUI();
 export const quickviews = createUI();
 export const menuMobile = createUI();
-

@@ -17,7 +17,7 @@
   /**
 	 * @type {any}
 	 */
-  let value = data.article.data.content
+  let value = data.article.data.content || ''
   const plugins = [
     gfm(),
     highlight(),
@@ -57,8 +57,9 @@
 
     // Acciones adicionales o configuraciones específicas del visor
   });
-
+  console.log('data', data)
 </script>
+
 <Headings title={data.article.data.name} />
 <!-- <BlogPost  article={data.article}>
   <Viewer value={data.article.data.content} {plugins} />

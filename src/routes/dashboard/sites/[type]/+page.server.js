@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { getSitesByType } from '$lib/api/sites';
 import { addSite, getSites } from '$lib/fetch/sites';
 import { schemaSite } from '$lib/zod/sites';
 import { fail } from '@sveltejs/kit';
@@ -8,6 +9,8 @@ import { superValidate } from 'sveltekit-superforms/server';
 
 /** @type {import('../$types').PageServerLoad} */
 export async function load({ params }) {
+	const sites0 = await getSitesByType(params.type)
+	// console.log('sites0', sites0)
 	const sites = getSites(params)
 	let formSite = await superValidate(schemaSite);
 	return { sites, formSite };
