@@ -1,6 +1,101 @@
 import { env } from "$env/dynamic/private";
 
 /**
+ 
+ * @param {string} type
+ * @param {string} id
+ */
+export async function getSiteByIdComponents(type, id) {
+  const response0 = await fetch(`${env.URL}/api/${env.VERSION}`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			query: `
+      query GetSiteById($type: String!, $id: String!) {
+				getSiteById(type: $type, id: $id) {
+					_id
+					url
+					data{
+						components{
+							header
+							headingArticles
+							gridArticles
+							cardArticles
+							headingProducts
+							gridProducts
+							cardProducts
+							headingCategories
+							gridCategories
+							cardCategories
+							contact
+							faqs
+							footer
+						}
+					}
+				}
+			}
+      `,
+			variables: {
+				type: type,
+				id: id
+			}
+		})
+	});
+
+	const {
+		data: { getSiteById }
+	} = await response0.json();
+
+  return getSiteById
+}
+/**
+ * @param {string} type
+ * @param {string} id
+ */
+export async function getSiteById(type, id) {
+  const response0 = await fetch(`${env.URL}/api/${env.VERSION}`, {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			query: `
+      query GetSiteById($type: String!, $id: String!) {
+				getSiteById(type: $type, id: $id) {
+					_id
+					url
+					data{
+						components{
+							header
+							headingArticles
+							gridArticles
+							cardArticles
+							headingProducts
+							gridProducts
+							cardProducts
+							headingCategories
+							gridCategories
+							cardCategories
+							contact
+							faqs
+							footer
+						}
+					}
+				}
+			}
+      `,
+			variables: {
+				type: type,
+				id: id
+			}
+		})
+	});
+
+	const {
+		data: { getSiteById }
+	} = await response0.json();
+
+  return getSiteById
+}
+/**
  * @param {{ type: string; id: string; }} params
  */
 export async function getSite(params) {

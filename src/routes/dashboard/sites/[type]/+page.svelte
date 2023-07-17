@@ -12,4 +12,5 @@
 	<FormSite {data} />
 </FormsSlideOversAdd>
 <Headings title={`Sites ${capitalizeName($page.params.type)}`} />
+
 <ListSites sites={data.sites}/>

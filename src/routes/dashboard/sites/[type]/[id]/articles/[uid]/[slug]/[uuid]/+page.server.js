@@ -1,8 +1,7 @@
-// @ts-nocheck
 
 // import { getProduct } from '$lib/db/products/query';
 
-import { getArticle } from '$lib/fetch/articles';
+import { getArticleById } from '$lib/fetch/articles';
 import { schemaArticle } from '$lib/zod/articles';
 import { superValidate } from 'sveltekit-superforms/server';
 
@@ -19,7 +18,7 @@ export const config = {
 export async function load({ params }) {
 	// const products = await getProductsByParentId(params)
 
-	const article = await getArticle(params)
+	const article = await getArticleById(params)
 	let formArticle = await superValidate({
 		id: article._id,
 		name: article.data.name,

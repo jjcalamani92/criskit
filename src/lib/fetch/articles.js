@@ -3,7 +3,7 @@ import { env } from "$env/dynamic/private";
 /**
  * @param {{ type: string; uuid: string; }} params
  */
-export async function getArticle(params) {
+export async function getArticleById(params) {
 	const response = await fetch(`${env.URL}/api/${env.VERSION}`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -49,10 +49,10 @@ export async function getArticle(params) {
 }
 
 /**
- * @param {{ type: any; uid: any; }} params
+ * @param {{ type: string; uid: string; }} params
  */
 export async function getArticlesByParentId (params) {
-  const response = await fetch(`${env.API_URL}/api/graphql`, {
+  const response = await fetch(`${env.URL}/api/${env.VERSION}`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({

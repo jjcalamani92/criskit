@@ -6,11 +6,27 @@
   $: buttonText = themeIsSummer ? 'Summer theme' : 'Winter theme';
   $: buttonAriaLabel = themeIsSummer ? 'Switch to Winter theme' : 'Switch to Summer theme';
   
+  /** @type {import('./$types').PageData} */
+  export let data;
+  // console.log('data', data.components.data.components.gridArticles)
 	const store = storable('Hola Mundo');
 	let value = 'world';
   import { page } from '$app/stores';
+	import ListArticles0 from "$lib/components/article/ListArticles0.svelte";
+	import ListArticles1 from "$lib/components/article/ListArticles1.svelte";
+	import ListArticles2 from "$lib/components/article/ListArticles2.svelte";
   // console.log('page', $page)
+  const components = data.components.data.components.gridArticles
+  const options = [
+		{ name: '0', component: ListArticles0 },
+		{ name: '1', component: ListArticles1 },
+		{ name: '2', component: ListArticles2 }
+	];
+  let selected = options.find(data => data.name === components);
 </script>
+
+<svelte:component this={selected?.component} />
+
 
 <svelte:head>
 	<title>Home</title>
