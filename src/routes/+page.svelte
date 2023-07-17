@@ -1,10 +1,36 @@
 <script>
+	import { storable } from "$lib/storable";
+	import { theme } from "$lib/theme";
+  $: themeIsSummer = $theme === 'summer';
+  $: currentTheme = themeIsSummer ? "summerTheme" : "winterTheme";
+  $: buttonText = themeIsSummer ? 'Summer theme' : 'Winter theme';
+  $: buttonAriaLabel = themeIsSummer ? 'Switch to Winter theme' : 'Switch to Summer theme';
+  
+	const store = storable('Hola Mundo');
+	let value = 'world';
+  import { page } from '$app/stores';
+  console.log('page', $page)
 </script>
 
 <svelte:head>
 	<title>Home</title>
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
+
+<button
+ 			aria-label={buttonAriaLabel}
+ 			class=""
+ 			on:click={() => (themeIsSummer ? theme.set('winter') : theme.set('summer'))}
+ 			>{buttonText}</button
+ 		>
+<h1>LocalStorage Custom Store</h1>
+<input bind:value>
+<button>
+	Set Data
+</button>
+<h2>
+	Data: {$store}
+</h2>
 
 <section class="bg-white">
 	<div class="relative isolate px-6 pt-14 lg:px-8">
