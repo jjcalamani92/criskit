@@ -17,8 +17,8 @@
   /**
 	 * @type {any}
 	 */
-  let value = data.article.data.traslate.es.content || ''
-  // let value = data.article.data.content || ''
+  // let value = data.article.data.traslate.es.content || ''
+  let value = data.article.data.content || ''
   const plugins = [
     gfm(),
     highlight(),
