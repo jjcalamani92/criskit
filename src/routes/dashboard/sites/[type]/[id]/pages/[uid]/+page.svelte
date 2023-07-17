@@ -1,5 +1,4 @@
 <script>
-	import FormsSlideOvers from '$lib/components/FormsSlideOvers.svelte';
 	import FormsSlideOversAdd from '$lib/components/FormsSlideOversAdd.svelte';
 	import FormsSlideOversUpdate from '$lib/components/FormsSlideOversUpdate.svelte';
 	import Headings from '$lib/components/Headings.svelte';
