@@ -2,6 +2,8 @@
 	import StackedLayouts from '$lib/components/StackedLayouts.svelte';
 
 	export let data;
+	console.log('data', data)
+	// import { page } from '$app/stores';
 </script>
 
 <svelte:head>

@@ -9,7 +9,7 @@
 	const store = storable('Hola Mundo');
 	let value = 'world';
   import { page } from '$app/stores';
-  console.log('page', $page)
+  // console.log('page', $page)
 </script>
 
 <svelte:head>
