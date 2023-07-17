@@ -1,10 +1,11 @@
-// @ts-nocheck
+
 import { SvelteKitAuth } from "@auth/sveltekit";
 import Google from "@auth/core/providers/google";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "$env/static/private";
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 
+/** @type {import('@sveltejs/kit').Handle} */
 async function authorization({ event, resolve }) {
   // Protect any routes under /authenticated
   if (event.url.pathname.startsWith("/dashboard")) {
@@ -13,7 +14,7 @@ async function authorization({ event, resolve }) {
     if (!session) {
       throw redirect(303, "/auth/signin");
     } 
-    if (session && session.user.email !== 'gorditomaloso@gmail.com') {
+    if (session && session.user?.email !== 'gorditomaloso@gmail.com') {
       throw redirect(303,"/");
     }
     // console.log('session.user.email', session.user.email)
