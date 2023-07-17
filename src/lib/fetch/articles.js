@@ -18,7 +18,7 @@ export async function getArticle(params) {
 						thumbnailUrl
 						content
 						params{
-							
+							path
 							paths{
 								name
 							}
