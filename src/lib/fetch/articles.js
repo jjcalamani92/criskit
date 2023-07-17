@@ -4,13 +4,13 @@ import { env } from "$env/dynamic/private";
  * @param {{ type: string; uuid: string; }} params
  */
 export async function getArticle(params) {
-	const response = await fetch(`${env.API_URL}/api/graphql`, {
+	const response = await fetch(`${env.URL}/api/${env.VERSION}`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
 			query: `
-      query GetArticle($type: String!, $id: String!) {
-				getArticle(type: $type, id: $id) {
+      query GetArticleById($type: String!, $id: String!) {
+				getArticleById(type: $type, id: $id) {
 					_id
 					data{
 						name
@@ -18,9 +18,16 @@ export async function getArticle(params) {
 						thumbnailUrl
 						content
 						params{
-							path
+							
 							paths{
 								name
+							}
+						}
+						traslate{
+							es{
+								name
+								description
+								content
 							}
 						}
 					}
