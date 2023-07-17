@@ -19,11 +19,12 @@ async function authorization({ event, resolve }) {
   return resolve(event);
 }
 
-// export const handle = SvelteKitAuth({
-// });
-export const handle = sequence(
-  SvelteKitAuth({
-    providers: [Google({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),],
-  }),
-  authorization
-);
+export const handle = SvelteKitAuth({
+  providers: [Google({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),],
+});
+// export const handle = sequence(
+//   SvelteKitAuth({
+//     providers: [Google({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),],
+//   }),
+//   authorization
+// );
