@@ -43,9 +43,9 @@ export async function getArticle(params) {
 	});
 
 	const {
-		data: { getArticle }
+		data: { getArticleById }
 	} = await response.json();
-	return getArticle;
+	return getArticleById;
 }
 
 /**
