@@ -11,7 +11,6 @@
 
   let showDropdown = false;
   import { page } from '$app/stores';
-  console.log('$page', $page.data.session?.user?.image)
   
   // console.log('showModal', showDropdown)
 
@@ -29,11 +28,9 @@
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
               <a href={"/dashboard"} class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
               
-              <a href={"/dashboard/sites/wear"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Sites</a>
-              <a href={"/dashboard/pages"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Pages</a>
-              <a href={"#"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-              <a href={"#"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
-              <a href={"#"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Reports</a>
+              <a href={"/dashboard/sites"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Sites</a>
+              <a href={"/dashboard/projects"} class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Proyects</a>
+              
             </div>
           </div>
         </div>

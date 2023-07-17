@@ -7,7 +7,6 @@ import { sequence } from "@sveltejs/kit/hooks";
 
 /** @type {import('@sveltejs/kit').Handle} */
 async function authorization({ event, resolve }) {
-  // Protect any routes under /authenticated
   if (event.url.pathname.startsWith("/dashboard")) {
     const session = await event.locals.getSession();
     
