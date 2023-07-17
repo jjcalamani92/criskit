@@ -4,7 +4,6 @@
 
 import { getArticle } from '$lib/fetch/articles';
 import { schemaArticle } from '$lib/zod/articles';
-import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 
 
@@ -41,28 +40,28 @@ export async function load({ params }) {
 // 	}
 // }
 
-export const actions = {
-	create: async ({ request, params }) => {
-		const form = await superValidate(request, schemaArticle);
-		if (!form.valid) return fail(400, { form });
+// export const actions = {
+// 	create: async ({ request, params }) => {
+// 		const form = await superValidate(request, schemaArticle);
+// 		if (!form.valid) return fail(400, { form });
 
-		const input = {
-			...form.data,
-			paths: form.data.paths.split('/').slice(1),
-			parentId: params.uid,
-			siteId: params.id,
-			type: params.type,
-			uid: '123456789',
+// 		const input = {
+// 			...form.data,
+// 			paths: form.data.paths.split('/').slice(1),
+// 			parentId: params.uid,
+// 			siteId: params.id,
+// 			type: params.type,
+// 			uid: '123456789',
 			
-		};
-		console.log('input', input)
-		// return await addProduct(input)
+// 		};
+// 		console.log('input', input)
+// 		// return await addProduct(input)
 		
-		// db.createTodo(cookies.get('userid'), data.get('description'));
-	}
+// 		// db.createTodo(cookies.get('userid'), data.get('description'));
+// 	}
 
-	// delete: async ({ cookies, request }) => {
-	// 	const data = await request.formData();
-	// 	// db.deleteTodo(cookies.get('userid'), data.get('id'));
-	// }
-};
+// 	// delete: async ({ cookies, request }) => {
+// 	// 	const data = await request.formData();
+// 	// 	// db.deleteTodo(cookies.get('userid'), data.get('id'));
+// 	// }
+// };
