@@ -9,10 +9,15 @@ async function authorization({ event, resolve }) {
   // Protect any routes under /authenticated
   if (event.url.pathname.startsWith("/dashboard")) {
     const session = await event.locals.getSession();
-    // console.log('session', session)
+    
     if (!session) {
       throw redirect(303, "/auth/signin");
+    } 
+    if (session && session.user.email !== 'gorditomaloso@gmail.com') {
+      throw redirect(303,"/");
     }
+    // console.log('session.user.email', session.user.email)
+    
   }
 
   // If the request is still here, just proceed as normally

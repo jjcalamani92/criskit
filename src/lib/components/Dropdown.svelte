@@ -1,4 +1,6 @@
 <script >
+	import clickOutside from "$lib/utils/clickOutside";
+
 /**
 	 * @type {boolean}
 	 */
@@ -14,6 +16,8 @@
 			aria-orientation="vertical"
 			aria-labelledby="user-menu-button"
 			tabindex="-1"
+			use:clickOutside
+			on:click_outside={() => (showDropdown = !showDropdown)}
 		>
 			<!-- Active: "bg-gray-100", Not Active: "" -->
 			<a
