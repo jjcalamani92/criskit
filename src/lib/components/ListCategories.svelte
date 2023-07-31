@@ -36,7 +36,7 @@
 				<a
 					href={type === 'category'
 						? `/dashboard/sites/${$page.params.type}/${$page.params.id}/categories/${
-								$page.params.i ? $page.params.i : '0'
+								$page.params.i ? +$page.params.i+1 : '0'
 						  }/${_id}`
 						: type === 'product'
 						? `/dashboard/sites/${$page.params.type}/${$page.params.id}/products/${_id}`
